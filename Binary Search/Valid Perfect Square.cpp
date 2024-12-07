@@ -4,7 +4,7 @@ public:
 	long int left = 1;
 	long int right = 100'000;
 	long int mid;
-	long int res;
+	long int res; 
 
 	while (left <= right)
 	{
