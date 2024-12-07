@@ -5,7 +5,7 @@ int searchInsert(vector<int>& nums, int target) {
 	long int right = nums.size() - 1;
 	long int mid;
 
-	while (left < right)
+	while (left < right) 
 	{
 		int mid = left + (right - left) / 2;
 		if (nums[mid] == target) {
