@@ -5,7 +5,7 @@ public:
         long int right = x;
         long int mid;
         long int res;
-        long int last;
+        long int last; 
 
         while (left <= right) {
             mid = (right - left) / 2 + left;
