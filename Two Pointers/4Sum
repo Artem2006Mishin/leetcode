@@ -1,0 +1,46 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> res;
+        vector<int> quad;
+
+        kSum(4, 0, target, nums, res, quad);
+        return res;
+    }
+
+private:
+    void kSum(int k, int start, long long int target, vector<int>& nums, vector<vector<int>>& res, vector<int>& quad) {
+        if (k != 2) {
+            for (int i = start; i < static_cast<int>(static_cast<int>(nums.size()) - k + 1); ++i) {
+                if (i > start && nums[i] == nums[i - 1]) {
+                    continue;
+                }
+                quad.push_back(nums[i]);
+                kSum(k - 1, i + 1, static_cast<long long int>(target - nums[i]), nums, res, quad);
+                quad.pop_back();
+            }
+            return;
+        }
+
+        // base case, two sum II
+        int l = start, r = nums.size() - 1;
+        while (l < r) {
+            if (nums[l] + nums[r] < target) {
+                l++;
+            }
+            else if (nums[l] + nums[r] > target) {
+                r--;
+            } 
+            else {
+                res.push_back(quad);
+                res.back().push_back(nums[l]);
+                res.back().push_back(nums[r]);
+                l++;
+                while (l < r && nums[l] == nums[l - 1]) {
+                    l++;
+                }
+            }
+        }
+    }
+};
