@@ -8,38 +8,35 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-
 class Solution {
 public:
-    void reorderList(ListNode* head) {
-        // find middle
-        ListNode* slow = head;
-        ListNode* fast = head ? head->next : nullptr;
-        while (fast && fast->next) {
-            slow = slow->next;
-            fast = fast->next->next;
-        }
+    void reorderList(ListNode* head)
+    {
+		// найдем середину списка с помощью быстрого и медленного указателей
+		ListNode* slow = head, *fast = head;
+		while (fast->next && fast->next->next) {
+			slow = slow->next;
+			fast = fast->next->next;
+		}
 
-        // reverse second half
-        ListNode* second = slow->next;
-        ListNode* prev = slow->next = nullptr;
-        while (second) {
-            ListNode* tmp = second->next;
-            second->next = prev;
-            prev = second;
-            second = tmp;
-        }
+		// переворачиваем вторую половину списка
+		ListNode* prev = nullptr, * next = nullptr, *curr = slow->next;
+		slow->next = nullptr;
+		while (curr) {
+			next = curr->next;
+			curr->next = prev;
+			prev = curr;
+			curr = next;
+		}
 
-        // merge two halves
-        ListNode* first = head;
-        second = prev;
-        while (second) {
-            ListNode* tmp1 = first->next;
-            ListNode* tmp2 = second->next;
-            first->next = second;
-            second->next = tmp1;
-            first = tmp1;
-            second = tmp2;
-        }
+		// объединяем две части списка
+		ListNode* first = head, * second = prev;
+		while (second) {
+			ListNode* temp1 = first->next, * temp2 = second->next;
+			first->next = second;
+			second->next = temp1;
+			first = temp1;
+			second = temp2;
+		}
     }
 };
