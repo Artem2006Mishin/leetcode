@@ -9,61 +9,35 @@
  * };
  */
 
-// новая версия
 class Solution {
 public:
-	ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-		if (list1 == nullptr && list2 == nullptr) {
-			return list1;
-		}
-		if (list1 == nullptr) {
-			return list2;
-		}
-		if (list2 == nullptr) {
-			return list1;
-		}
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        // Создаем фиктивный узел для упрощения кода
+        ListNode dummy;
+        ListNode* tail = &dummy;
 
-		ListNode* answer = list1;
-		bool condition = true;
-		if (list1->val > list2->val) {
-			condition = false;
-			answer = list2;
-		}
+        // Пока оба списка не пусты
+        while (l1 && l2) {
+            if (l1->val < l2->val) {
+                tail->next = l1;
+                l1 = l1->next;
+            }
+            else {
+                tail->next = l2;
+                l2 = l2->next;
+            }
+            tail = tail->next;
+        }
 
-		while (list1 != nullptr || list2 != nullptr) {
-			if (condition) {
-				ListNode* next = list1->next;
-				if (list1->next == nullptr) {
-					list1->next = list2;
-					break;
-				}
-				if (list1->next->val > list2->val) {
-					list1->next = list2;
-					list1 = next;
-					condition = false;
-				}
-				else {
-					list1 = next;
-					condition = true;
-				}
-			}
-			else {
-				ListNode* next = list2->next;
-				if (list2->next == nullptr) {
-					list2->next = list1;
-					break;
-				}
-				if (list2->next->val > list1->val) {
-					list2->next = list1;
-					list2 = next;
-					condition = true;
-				}
-				else {
-					list2 = next;
-					condition = false;
-				}
-			}
-		}
-		return answer;
-	}
+        // Если один из списков не пуст, добавляем оставшиеся элементы
+        if (l1) {
+            tail->next = l1;
+        }
+        else if (l2) {
+            tail->next = l2;
+        }
+
+        // Возвращаем объединенный список, начиная с первого узла после фиктивного
+        return dummy.next;
+    }
 };
